@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldAlert, Cpu, Eye, AlertOctagon } from 'lucide-react';
+import { ShieldAlert, Cpu, Eye } from 'lucide-react';
 import { API_ENDPOINTS } from '../config';
 
 interface LoginViewProps {
