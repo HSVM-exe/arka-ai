@@ -6,7 +6,7 @@
 
 ---
 
-## 🌌 Project Overview
+## 🌌** Project Overview **
 **ARKA AI** is a premium, mission-critical space weather forecasting and diagnostics console designed in the aesthetic of the **ISRO Aditya-L1 Mission Operations Center (MOC)**. 
 
 The platform intercepts streaming flux telemetry from the Aditya-L1 Lagrange Point 1 satellite payload—specifically the **SoLEXS** (Solar Low Energy X-ray Spectrometer) and **HEL1OS** (High Energy L1 Orbiting X-ray Spectrometer) instruments. By parsing raw soft and hard X-ray counts, ARKA AI nowcasts solar flare stages, forecasts flaring probabilities, generates explainable AI (XAI) feature importance maps, and calculates operational risks to Earth orbit and ground systems.
