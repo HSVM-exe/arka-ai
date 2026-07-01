@@ -18,7 +18,8 @@ import {
   LineChart,
   Line,
   AreaChart,
-  Area
+  Area,
+  Tooltip
 } from 'recharts';
 import type { 
   LightCurvePoint, 

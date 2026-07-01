@@ -2,6 +2,8 @@
 ### *Aditya-L1 Space Weather Operations Cockpit, Empirical Models, and Real-Time Forecasting*
 **ISRO Bharatiya Antariksh Hackathon 2026 | Problem Statement 15**
 
+🔗 **[Live Demo Link (GitHub Pages)](https://hsvm-exe.github.io/arka-ai/)**
+
 ---
 
 ## 🌌 Project Overview
