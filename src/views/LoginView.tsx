@@ -90,16 +90,16 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess }) => {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '56px',
-            height: '56px',
+            width: '80px',
+            height: '80px',
             borderRadius: '50%',
-            background: 'rgba(255, 138, 0, 0.06)',
-            border: '1px solid rgba(255, 138, 0, 0.25)',
-            color: 'var(--solar-orange)',
+            background: '#000',
+            border: '2px solid rgba(255, 138, 0, 0.4)',
             marginBottom: '14px',
-            filter: 'drop-shadow(0 0 8px rgba(255, 138, 0, 0.4))'
+            overflow: 'hidden',
+            boxShadow: '0 0 15px rgba(255, 138, 0, 0.3)'
           }}>
-            <AlertOctagon size={30} />
+            <img src="/logo.png" alt="ARKA AI Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <h2 style={{ 
             fontFamily: 'Orbitron, sans-serif',

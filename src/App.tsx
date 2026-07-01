@@ -77,11 +77,9 @@ const App: React.FC = () => {
 
   // Navigation & UI tab state
   const [currentTab, setCurrentTab] = useState<string>('overview');
-  
-  // Settings state
   const [settings, setSettings] = useState<SystemSettings>(DEFAULT_SETTINGS);
-
-  // Connection mode state
+  const [falseAlarmCost, setFalseAlarmCost] = useState<number>(3);
+  const [missedFlareCost, setMissedFlareCost] = useState<number>(8);
   const [backendStatus, setBackendStatus] = useState<'connecting' | 'online' | 'offline'>('connecting');
 
   // Simulation & Stream state
@@ -94,7 +92,7 @@ const App: React.FC = () => {
 
   // Client-side simulator fallback state
   const [localScenarioPoints, setLocalScenarioPoints] = useState<RawTelemetryPoint[]>([]);
-  
+
   // Ingested status state
   const [detectorHealth, setDetectorHealth] = useState<DetectorHealth>({
     completeness: 100,
@@ -935,6 +933,10 @@ ${impactRisks.map(r => `### ${r.domain} (Risk: ${r.risk_level})
             settings={settings}
             onSettingsChange={handleSettingsChange}
             userRole={userRole}
+            falseAlarmCost={falseAlarmCost}
+            setFalseAlarmCost={setFalseAlarmCost}
+            missedFlareCost={missedFlareCost}
+            setMissedFlareCost={setMissedFlareCost}
           />
         );
       default:
@@ -945,10 +947,6 @@ ${impactRisks.map(r => `### ${r.domain} (Risk: ${r.risk_level})
   const latestPoint = chartData[chartData.length - 1];
   const severityClass = latestPoint ? `sev-${latestPoint.alert_level.toLowerCase()}` : 'sev-quiet';
   const statusLabel = latestPoint ? latestPoint.alert_level : 'Quiet';
-
-  // -------------------------------------------------------------
-  // Custom Render - 3-Second Bootstrap Loader
-  // -------------------------------------------------------------
   if (isLoading) {
     return (
       <div className="arka-loader-overlay">
@@ -996,7 +994,7 @@ ${impactRisks.map(r => `### ${r.domain} (Risk: ${r.risk_level})
       <div className="sidebar">
         <div>
           <div className="brand-section">
-            <span className="brand-logo"><AlertOctagon /></span>
+            <img className="brand-logo" src="/logo.png" alt="ARKA AI Logo" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255, 138, 0, 0.4)' }} />
             <span className="brand-title">ARKA AI</span>
           </div>
 
