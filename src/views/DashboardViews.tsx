@@ -566,8 +566,50 @@ export const NowcastingView: React.FC<NowcastingViewProps> = ({ latestPoint }) =
     }
   };
 
+  const getPhysicsBreakdown = (phase: string) => {
+    switch (phase) {
+      case 'Quiet':
+      case 'Recovery':
+        return {
+          why: "Active magnetic regions are in a stable potential configuration. Magnetic shear and flux cancellation are low, keeping coronal magnetic loops locked and stable.",
+          afterAction: "Maintain nominal instrument tracking. Monitor standard solar wind speeds and localized active regions for new flux emergence."
+        };
+      case 'Pre-Flare':
+        return {
+          why: "Flux emergence from the convection zone is shearing the existing active region magnetic field. This shears helical flux ropes and stores magnetic free energy.",
+          afterAction: "Calibrate instrument filters. Establish early alert status with regional space weather forecasting bureaus (e.g., NETRA)."
+        };
+      case 'Initiation':
+        return {
+          why: "Sheared magnetic loop arches trigger localized instability, initiating reconnection at a coronal null-point. Non-thermal electrons are accelerated downward.",
+          afterAction: "Switch SDD1 filter wheel to high-attenuation mode. Pre-stage payload computers into backup register modes to handle particle spikes."
+        };
+      case 'Rise':
+        return {
+          why: "Rapid reconnection of magnetic loop arches releases high quantities of energy. Non-thermal electrons bombard the chromosome, driving chromospheric evaporation.",
+          afterAction: "Deploy physical shutters on SUIT UV telescope. Isolate spacecraft battery chargers to prevent solar proton surges."
+        };
+      case 'Peak':
+        return {
+          why: "Reconnection rate peaks, accelerating ions to relativistic speeds. Post-flare loops reach extreme temperatures (>20 MK), releasing peak X-ray and CME flux.",
+          afterAction: "Close all primary payload shutters. Align solar arrays parallel to velocity vectors. Issue national grid reactive power and GIC warning codes."
+        };
+      case 'Decay':
+        return {
+          why: "Reconnected loops relax and cool via thermal conduction and radiative losses. The energy supply from reconnection ceases, leading to exponential flux decay.",
+          afterAction: "Perform post-eruption calibration sweeps. Sweep ground magnetometers for Geomagnetic Induced Currents (GIC) indicators."
+        };
+      default:
+        return {
+          why: "Solar state monitoring active. Background magnetic flux in steady state.",
+          afterAction: "Observe payload and telecommunications parameters."
+        };
+    }
+  };
+
   const explanation = getScientificExplanation(currentPhase);
   const protocols = getOperationalProtocol(currentPhase);
+  const physicsBreakdown = getPhysicsBreakdown(currentPhase);
 
   // Check for detector saturation state from counts
   const softCounts = latestPoint?.soft_xray_counts || 0;
@@ -731,6 +773,10 @@ export const NowcastingView: React.FC<NowcastingViewProps> = ({ latestPoint }) =
             <div style={{ fontSize: '11px', color: '#64748b', marginTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px' }}>
               {explanation.indicators.cycle}
             </div>
+            <div style={{ marginTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}>
+              <div style={{ fontSize: '11px', color: 'var(--solar-gold)', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '4px' }}>Why Flare Occurred (Physics Trigger):</div>
+              <div style={{ color: '#cbd5e1', fontSize: '12px', lineHeight: '1.5' }}>{physicsBreakdown.why}</div>
+            </div>
           </div>
         </div>
 
@@ -777,6 +823,10 @@ export const NowcastingView: React.FC<NowcastingViewProps> = ({ latestPoint }) =
                 </span>
               </div>
             ))}
+            <div style={{ marginTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}>
+              <div style={{ fontSize: '11px', color: 'var(--cyan-telemetry)', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '4px' }}>Precautionary After-Action Protocols:</div>
+              <div style={{ color: '#cbd5e1', fontSize: '12px', lineHeight: '1.5' }}>{physicsBreakdown.afterAction}</div>
+            </div>
           </div>
         </div>
       </div>
