@@ -1,0 +1,785 @@
+/* ==========================================================================
+   ARKA AI - Space-Weather Mission Control Styling System
+   ========================================================================== */
+
+/* 1. Global Atmosphere & Background */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-space);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Radar scanline sweep */
+.app-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 9999;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Space particle background */
+.space-particles {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 138, 0, 0.02) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(73, 230, 255, 0.02) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 2. Sidebar Redesign (Mission Control Navigation Panel) */
+.sidebar {
+  width: 250px;
+  background-color: var(--bg-panel);
+  border-right: 1px solid var(--border-glass);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  z-index: 10;
+  position: relative;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* Glowing Top Bracket inside Sidebar */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--solar-orange), transparent);
+}
+
+.brand-section {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 138, 0, 0.05);
+}
+
+.brand-logo {
+  color: var(--solar-orange);
+  filter: drop-shadow(0 0 8px rgba(255, 138, 0, 0.6));
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.brand-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  background: linear-gradient(135deg, #ffffff 30%, var(--solar-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navigation-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 15px 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  color: #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  position: relative;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.nav-item:hover {
+  color: var(--solar-gold);
+  background: rgba(255, 138, 0, 0.03);
+  border: 1px solid rgba(255, 138, 0, 0.1);
+  padding-left: 18px;
+}
+
+.nav-item.active {
+  color: #ffffff;
+  background: linear-gradient(90deg, rgba(255, 138, 0, 0.1) 0%, rgba(255, 138, 0, 0.01) 100%);
+  border: 1px solid rgba(255, 138, 0, 0.25);
+  box-shadow: inset 0 0 10px rgba(255, 138, 0, 0.1);
+}
+
+/* active orange left indicator */
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  background: var(--solar-orange);
+  box-shadow: 0 0 10px var(--solar-orange);
+  border-radius: 0 2px 2px 0;
+}
+
+.nav-item-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item-text {
+  flex-grow: 1;
+  letter-spacing: 0.5px;
+}
+
+.nav-badge {
+  background: var(--alert-red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 1px 5px;
+  border-radius: 2px;
+  box-shadow: 0 0 6px var(--alert-red);
+}
+
+.sidebar-footer {
+  padding: 15px 20px;
+  border-top: 1px solid rgba(255, 138, 0, 0.05);
+  font-size: 10px;
+  color: #64748b;
+}
+
+/* 3. Main Panel & Status Bar Redesign (Space Weather Cockpit) */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.status-bar {
+  height: 54px;
+  background-color: var(--bg-panel);
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  z-index: 5;
+}
+
+.system-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.status-indicator-dot.pulse {
+  animation: dot-breathing 1.5s infinite alternate;
+}
+
+.status-label {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.active-flare-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 15px;
+  padding-left: 15px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+}
+
+.active-flare-tag {
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.controls-section {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.backend-badge-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+.backend-badge-custom.connecting {
+  background-color: rgba(73, 230, 255, 0.05);
+  border: 1px solid rgba(73, 230, 255, 0.3);
+  color: var(--cyan-telemetry);
+}
+
+.backend-badge-custom.online {
+  background-color: rgba(64, 255, 122, 0.05);
+  border: 1px solid rgba(64, 255, 122, 0.3);
+  color: var(--health-green);
+  box-shadow: 0 0 6px rgba(64, 255, 122, 0.15);
+}
+
+.backend-badge-custom.offline {
+  background-color: rgba(255, 138, 0, 0.05);
+  border: 1px solid rgba(255, 138, 0, 0.3);
+  color: var(--solar-orange);
+}
+
+.scenario-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+}
+
+.scenario-select {
+  background-color: #07080b;
+  border: 1px solid var(--border-glass);
+  color: #fff;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  padding: 4px 8px;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.scenario-select:focus {
+  border-color: var(--solar-orange);
+  box-shadow: 0 0 8px rgba(255, 138, 0, 0.3);
+}
+
+.time-display {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  line-height: 1.3;
+  color: #64748b;
+}
+
+.time-display span:first-child {
+  color: #cbd5e1;
+}
+
+/* 4. Dashboard Views layout */
+.view-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.view-title-section h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.view-title-section p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--solar-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 4px 0 0 0;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-control {
+  background-color: rgba(255, 138, 0, 0.03);
+  border: 1px solid var(--border-glass);
+  color: var(--solar-gold);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+}
+
+.btn-control:hover:not(:disabled) {
+  background-color: var(--solar-orange);
+  color: #000;
+  box-shadow: 0 0 15px rgba(255, 138, 0, 0.4);
+  border-color: var(--solar-orange);
+}
+
+.btn-control:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* 5. Space HUD Glassmorphism Cards */
+.dashboard-card {
+  background: rgba(13, 16, 24, 0.65);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold bracket overlay details for cards */
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 6px; height: 6px;
+  border-top: 1.5px solid var(--solar-gold);
+  border-left: 1.5px solid var(--solar-gold);
+}
+
+.dashboard-card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; width: 6px; height: 6px;
+  border-top: 1.5px solid var(--solar-gold);
+  border-right: 1.5px solid var(--solar-gold);
+}
+
+.dashboard-card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--solar-gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 6. Live Telemetry Metrics Grid */
+.telemetry-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.metric-card {
+  background: rgba(13, 16, 24, 0.5);
+  border: 1px solid rgba(255, 138, 0, 0.1);
+  padding: 16px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.metric-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #94a3b8;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.metric-val-main {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.metric-card.active-cyan .metric-val-main {
+  color: var(--cyan-telemetry);
+  text-shadow: 0 0 10px rgba(73, 230, 255, 0.3);
+}
+
+.metric-card.active-gold .metric-val-main {
+  color: var(--solar-gold);
+  text-shadow: 0 0 10px rgba(255, 200, 77, 0.3);
+}
+
+.metric-details-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* 7. Replay / Playback HUD Panel */
+.replay-dashboard-controls {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-glass);
+  border-radius: 6px;
+  padding: 16px 24px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.playback-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.playback-speed-select {
+  background-color: #07080b;
+  border: 1px solid rgba(255, 138, 0, 0.2);
+  color: var(--solar-gold);
+  padding: 4px 8px;
+  font-family: 'Share Tech Mono', monospace;
+  outline: none;
+  cursor: pointer;
+}
+
+.timeline-progress-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.timeline-progress-track {
+  flex-grow: 1;
+  height: 6px;
+  background-color: #07080b;
+  border: 1px solid rgba(255, 138, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.timeline-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--solar-orange), var(--solar-gold));
+  box-shadow: 0 0 10px var(--solar-orange);
+}
+
+/* 8. Mission Terminal Logs views */
+.terminal-window {
+  background-color: #040507;
+  border: 1px solid rgba(255, 138, 0, 0.15);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+  padding: 16px;
+  height: 380px;
+  overflow-y: auto;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.terminal-line {
+  margin-bottom: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-timestamp {
+  color: var(--solar-orange);
+}
+
+.terminal-operator {
+  color: var(--cyan-telemetry);
+  font-weight: bold;
+}
+
+.terminal-action {
+  color: #fff;
+  font-weight: bold;
+}
+
+.terminal-details {
+  color: #94a3b8;
+}
+
+/* 9. High-Tech tables */
+.metrics-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid rgba(255, 138, 0, 0.05);
+  border-radius: 4px;
+}
+
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+}
+
+.metrics-table th {
+  background-color: rgba(255, 138, 0, 0.03);
+  color: var(--solar-gold);
+  border-bottom: 1.5px solid var(--border-glass);
+  padding: 12px 16px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.metrics-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 138, 0, 0.05);
+  color: #cbd5e1;
+}
+
+.metrics-table tr:hover {
+  background-color: rgba(255, 138, 0, 0.02);
+}
+
+/* 10. Alarm Severity indicators */
+.sev-low { color: var(--health-green); }
+.sev-elevated { color: var(--cyan-telemetry); }
+.sev-moderate { color: var(--solar-gold); }
+.sev-high { color: var(--solar-orange); }
+.sev-critical { color: var(--alert-red); animation: text-flicker 1s infinite alternate; }
+
+.status-indicator-dot.sev-low { background-color: var(--health-green); }
+.status-indicator-dot.sev-elevated { background-color: var(--cyan-telemetry); }
+.status-indicator-dot.sev-moderate { background-color: var(--solar-gold); }
+.status-indicator-dot.sev-high { background-color: var(--solar-orange); }
+.status-indicator-dot.sev-critical { background-color: var(--alert-red); }
+
+/* 11. Custom sliders styles */
+.control-slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.control-slider {
+  flex-grow: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #1e293b;
+  outline: none;
+}
+
+.control-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--solar-gold);
+  border: 1px solid var(--solar-orange);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--solar-orange);
+  transition: transform 0.1s ease;
+}
+
+.control-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.control-slider:disabled::-webkit-slider-thumb {
+  background: #475569;
+  border-color: #64748b;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.slider-val {
+  min-width: 42px;
+  text-align: right;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  color: var(--solar-gold);
+}
+
+/* 12. Rocket Science UI animations */
+@keyframes pulse-glow {
+  0% { filter: drop-shadow(0 0 2px rgba(255, 138, 0, 0.4)); }
+  50% { filter: drop-shadow(0 0 10px rgba(255, 138, 0, 0.8)); }
+  100% { filter: drop-shadow(0 0 2px rgba(255, 138, 0, 0.4)); }
+}
+
+@keyframes dot-breathing {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes text-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 0 0 4px var(--alert-red), 0 0 10px var(--alert-red);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* 13. High-Tech Loader overlay */
+.arka-loader-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--bg-space);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--solar-gold);
+}
+
+.loader-card {
+  width: 500px;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 0 35px rgba(255, 138, 0, 0.1);
+  padding: 40px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.loader-bar-track {
+  height: 8px;
+  background-color: #07080b;
+  border: 1px solid rgba(255, 138, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--solar-orange), var(--solar-gold));
+  box-shadow: 0 0 12px var(--solar-orange);
+  transition: width 0.1s linear;
+}
+
+.loader-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.loader-check-item.active {
+  color: var(--solar-gold);
+}
+
+.loader-check-item.done {
+  color: var(--health-green);
+}
+
+/* Solar Wind wave drifting animation */
+@keyframes wave-drift {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-80px);
+  }
+}
+
+/* Corona loop rotating animation */
+@keyframes rotate-corona {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-corona-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Timeline Custom Range Slider Styling */
+.control-slider-wrapper {
+  width: 100%;
+}
+
+.control-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 138, 0, 0.1);
+  border: 1px solid rgba(255, 138, 0, 0.15);
+  border-radius: 2px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.control-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--solar-gold);
+  border: 2px solid var(--solar-orange);
+  box-shadow: 0 0 6px var(--solar-orange);
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.control-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #fff;
+}
+
