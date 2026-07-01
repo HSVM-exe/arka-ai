@@ -16,9 +16,9 @@ import schemas
 from worker import worker
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("SolarShieldAPI")
+logger = logging.getLogger("ArkaAI_API")
 
-app = FastAPI(title="SolarShield AI Platform API", version="1.0.0")
+app = FastAPI(title="ARKA AI Platform API", version="1.0.0")
 
 # Enable CORS for React frontend development
 app.add_middleware(
@@ -32,7 +32,7 @@ app.add_middleware(
 # -------------------------------------------------------------
 # Lightweight Cryptographic Token Manager (No PyJWT required!)
 # -------------------------------------------------------------
-SECRET_KEY = b"solarshield-mission-control-security-secret-key-2026"
+SECRET_KEY = b"arka-ai-mission-control-security-secret-key-2026"
 
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
