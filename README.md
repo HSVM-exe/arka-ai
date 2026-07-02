@@ -15,18 +15,23 @@ The platform intercepts streaming flux telemetry from the Aditya-L1 Lagrange Poi
 
 ## ⚡ Unique Value Propositions (USPs) & Core Contributions
 1. **Aerospace Command HUD (MOC UI)**: Replaces typical SaaS dashboard layouts with a dark-space slate grid (`#050608`), Solar Orange (`#FF8A00`), and Gold (`#FFC84D`) accents, complete with a 3-second handshaking loading screen and Mission Elapsed Time (MET) uptime tracking.
+
 2. **Double-Detector Calibrated Nowcasting**: Blends low-energy thermal (SoLEXS) and high-energy impulsive (HEL1OS) channels to classify solar cycles into 7 phases (Quiet, Pre-Flare, Initiation, Rise, Peak, Decay, Recovery) with an adaptive standard-deviation threshold trigger ($k\sigma$).
+
 3. **Advanced Solar Physics Feature Engineering**:
    * **Spectral Hardness Ratio**: Extracts counts from FITS PI spectrum files to check soft band (2.8-6 keV) vs hard band (6-22 keV) changes to monitor localized plasma pre-heating.
    * **Neupert Effect Residual**: Computes the derivative of soft flux against hard X-ray flux to check for particle acceleration violations.
    * **Quasi-Periodic Pulsations (QPP)**: Extracts micro-oscillations (10-300s period) using Lomb-Scargle periodograms.
    * **Recurrence Quantification Analysis (RQA)**: Maps coronal state transitions in reconstructed multi-dimensional phase space.
    * **Unsupervised Spectral Autoencoder**: Flags quiet-sun reconstruction anomalies when error exceeds $2\sigma$.
+
 4. **Calibrated Probabilities & Operational Tunability**:
    * **Isotonic Regression Calibration**: Maps raw model outputs so they match real-world flare occurrences, validated by an interactive **Reliability Diagram**.
    * **Lead-Time-Weighted Recall**: A custom operational metric that weights true positives by warning early: `Score = min(Lead Time (min), 30) / 30`.
    * **Asymmetric Cost Matrix Tuner**: Lets mission directors optimize alert thresholds based on operational penalties: `Threshold = C_FA / (C_FA + C_Miss)`.
+
 5. **Cognitive Explainability (XAI)**: Demystifies core neural inferences by showing trigger evidence log lines, uncertainty factors, and real-time feature contribution metrics.
+
 6. **Self-Healing Hybrid Failsafe**: Automatically falls back to SQLite (`solarshield.db`) if local PostgreSQL containers are offline, ensuring 100% platform availability.
 
 ---
