@@ -34,7 +34,7 @@ The platform intercepts streaming flux telemetry from the Aditya-L1 Lagrange Poi
 
 6. **Self-Healing Hybrid Failsafe**: Automatically falls back to SQLite (`solarshield.db`) if local PostgreSQL containers are offline, ensuring 100% platform availability.
 
----
+
 
 ## 🏗️ System Architecture
 
